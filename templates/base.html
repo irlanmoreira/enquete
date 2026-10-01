@@ -1,0 +1,32 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+    <h1>Enquetes</h1>
+    <nav>
+        <ul>
+            <li><a href="">Início</a></li>
+            <li><a href="">Minhas Enquetes</a></li>
+            <li><a href="">Novidades</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    {% block main %}
+    {% endblock %}
+
+    {% block aside %}
+    {% endblock %}
+
+</main>
+
+<footer>
+    <p>Todos os direitos reservados</p>
+</footer>
+</body>
+</html>
