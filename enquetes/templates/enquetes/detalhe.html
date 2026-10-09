@@ -1,7 +1,16 @@
 <html>
 <body>
-<h1>Detalhe das enquetes</h1>
+<h1>{{ question }}</h1>
+<p>Data de publicação: {{ question.pub_date }}</p>
+<p>Status: {{ question.status }}</p>
+<p>Data de encerramento: {{ question.closes_at }}</p>
 
+<h2>Alternativas</h2>
+<ul>
+    {% for choice in question.choices.all %}
+        <li>{{ choice }} - {{ choice.votes }} votos.</li>
+    {% endfor %}
+</ul>
 <a href="{% url 'enquetes:index' %}">Página inicial</a>
 </body>
 </html>

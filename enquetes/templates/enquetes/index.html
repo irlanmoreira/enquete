@@ -2,7 +2,11 @@
 
 {% block main %}
     <h1>Aplicação enquete</h1>
-
-    <a href="{% url 'enquetes:detalhe' %}">Detalhe</a>
-
+    <ul>
+    {% for question in questions %}
+        <li><a href="{% url 'enquetes:detalhe' question.id %}">{{question}}</a></li>
+    {% empty %}
+        <p>Não há enquetes no momento.</p>
+    {% endfor %}
+    </ul>
 {% endblock %}
