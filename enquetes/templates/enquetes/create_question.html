@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h1>Criar enquete</h1>
+    <form method="post">
+    {% csrf_token %}
+        <div>
+        {{ form.question_text.label_tag }}
+        {{ form.question_text }}
+        {% for erro in form.question_text.errors %}
+        <span style="color:red">{{ erro }}</span>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.closes_at.label_tag }}
+        {{ form.closes_at }}
+
+        {% for error in form.closes_at.errors %}
+        <span style="color:red">{{ erro }}</span>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Criar</button>
+    </form>
+{% endblock %}
