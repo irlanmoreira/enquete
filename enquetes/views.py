@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from enquetes.models import Question
-from .forms import QuestionForm
+from .forms import QuestionForm, SignUpForm
 
 
 # Create your views here.
@@ -17,6 +17,7 @@ def detalhe(request, question_id):
     return render(request, 'enquetes/detalhe.html',{"question":question})
 
 def criar_enquete(request):
+
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -28,4 +29,16 @@ def criar_enquete(request):
             return redirect('enquetes:index')
     else:
         form = QuestionForm()
+
     return render(request, 'enquetes/create_question.html', {'form': form})
+
+def signup(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+
+        if form.is_valid():
+            return redirect('enquetes:index')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'enquetes/signup.html', {'form': form})
