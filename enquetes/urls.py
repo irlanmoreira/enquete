@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('detalhe/<int:question_id>', views.detalhe, name='detalhe'),
     path('enquete',views.criar_enquete,name='criar_enquete'),
+    path('enquete/<int:pk>', views.criar_enquete, name='editar_enquete'),
 
 ]

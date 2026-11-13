@@ -35,8 +35,14 @@ class Question(models.Model):
         return self.question_text
 
 class Detail(models.Model):
+    class Difficulty(models.IntegerChoices):
+        EASY = 1, 'Easy'
+        MEDIUM = 2, 'Medium'
+        HARD = 3, 'Hard'
+
     description = models.TextField(verbose_name='Descrição')
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    difficulty = models.IntegerField(choices=Difficulty.choices)
 
 class Author(models.Model):
     name = models.CharField("Nome", max_length=200)

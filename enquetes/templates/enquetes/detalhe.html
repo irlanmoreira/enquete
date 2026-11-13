@@ -4,7 +4,7 @@
 <p>Data de publicação: {{ question.pub_date }}</p>
 <p>Status: {{ question.status }}</p>
 <p>Data de encerramento: {{ question.closes_at }}</p>
-<p><a href="{% url 'enquetes:editar_enquete' question.id %}">Editar</a></p>
+<p><a href="{% url 'enquetes:editar_enquete' question.id%}">Editar</a></p>
 <h2>Alternativas</h2>
 <ul>
     {% for choice in question.choices.all %}

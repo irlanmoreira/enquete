@@ -5,21 +5,32 @@
     <form method="post">
     {% csrf_token %}
         <div>
-        {{ form.question_text.label_tag }}
-        {{ form.question_text }}
-        {% for erro in form.question_text.errors %}
+        {{ form_question.question_text.label_tag }}
+        {{ form_question.question_text }}
+        {% for erro in form_question.question_text.errors %}
         <span style="color:red">{{ erro }}</span>
         {% endfor %}
     </div>
     <div>
-        {{ form.closes_at.label_tag }}
-        {{ form.closes_at }}
+        {{ form_question.closes_at.label_tag }}
+        {{ form_question.closes_at }}
 
-        {% for error in form.closes_at.errors %}
+        {% for error in form_question.closes_at.errors %}
         <span style="color:red">{{ erro }}</span>
         {% endfor %}
     </div>
-
+    <div>
+        <h2>Detalhes</h2>
+        {{ form_details }}
+    </div>
+    <div>
+        <h2>Opções</h2>
+        {{ choice_formset.management_form  }}
+        {{ choice_formset.non_form_errors  }}
+        {% for choice in choice_formset %}
+            {{ choice }}
+        {% endfor %}
+    </div>
     <button type="submit">Criar</button>
     </form>
 {% endblock %}
