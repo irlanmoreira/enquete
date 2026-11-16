@@ -2,10 +2,11 @@ from django import forms
 from django.forms.models import inlineformset_factory
 
 from enquetes.models import Question, Detail, Choice
+from enquetes.validators import validate_question_mark
 
 
 class QuestionForm(forms.Form):
-    question_text = forms.CharField(label="Título da enquete", max_length=50, min_length=10)
+    question_text = forms.CharField(label="Título da enquete", max_length=50, min_length=10, validators=[validate_question_mark])
     closes_at = forms.DateTimeField(label="Fecha em")
 
     def clean_question_text(self):
@@ -17,14 +18,14 @@ class QuestionForm(forms.Form):
 class QuestionModelForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields=['question_text', 'closes_at']
+        fields=['question_text', 'closes_at', 'image']
         labels = {'closes_at': 'Fecha em'}
 
-    def clean_question_text(self):
+    '''def clean_question_text(self):
         text = self.cleaned_data["question_text"].strip()
         if not text.endswith("?"):
             raise forms.ValidationError("A enquete deve terminar com '?'.")
-        return text
+        return text'''
 
 class QuestionDetailsModelForm(forms.ModelForm):
     class Meta:

@@ -1,5 +1,5 @@
 from django.db import models
-
+from .validators import validate_question_mark
 # Create your models here.
 class Choice(models.Model):
     choice_text = models.CharField("Texto", max_length=200)
@@ -19,12 +19,12 @@ class Question(models.Model):
         RASCUNHO = "R", "RASCUNHO"
         PUBLICADA = "P", "PUBLICADA"
 
-    question_text = models.CharField("Texto", max_length=200, unique=True)
+    question_text = models.CharField("Texto", max_length=200, unique=True, validators=[validate_question_mark])
     status = models.CharField(max_length=1, choices=Status, default=Status.RASCUNHO)
     pub_date = models.DateField("Data de publicação", auto_now_add=True)
     closes_at = models.DateTimeField(null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name="questions", verbose_name="Categorias")
-
+    image = models.ImageField("Imagem", upload_to="questions/", null=True, blank=True)
 
     class Meta:
         ordering = ["-pub_date"]

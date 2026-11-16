@@ -5,6 +5,9 @@
 <p>Status: {{ question.status }}</p>
 <p>Data de encerramento: {{ question.closes_at }}</p>
 <p><a href="{% url 'enquetes:editar_enquete' question.id%}">Editar</a></p>
+{% if question.image %}
+<img src="{{ question.image.url }}" alt="{{ question }}" width="300px">
+{% endif %}
 <h2>Alternativas</h2>
 <ul>
     {% for choice in question.choices.all %}
