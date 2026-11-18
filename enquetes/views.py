@@ -6,9 +6,11 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.views.generic.list import ListView
 
 from enquetes.models import Question, Detail
+from .mixins import QuestionFormsMixin
 from .forms import QuestionModelForm, SignUpForm, QuestionDetailsModelForm, ChoiceFormSet
 
 
@@ -59,14 +61,13 @@ def criar_enquete(request, pk=None):
     context = {"form_question": form_question, "form_details": form_details, "choice_formset": choice_formset}
     return render(request, 'enquetes/create_question.html', context)
 
-class CreateQuestionView(CreateView):
+class CreateQuestionView(QuestionFormsMixin, CreateView):
     model = Question
     template_name = 'enquetes/create_question.html'
-
     form_class = QuestionModelForm
     success_url = reverse_lazy('enquetes:index')
 
-    def get_context_data(self, **kwargs: Any):
+    '''def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
             context["choice_formset"] = ChoiceFormSet(self.request.POST)
@@ -79,7 +80,7 @@ class CreateQuestionView(CreateView):
     def form_valid(self, form):
         choice_formset = ChoiceFormSet(self.request.POST)
         form_details = QuestionDetailsModelForm(self.request.POST)
-        if not choice_formset.is_valid() and not form_details.is_valid():
+        if not (choice_formset.is_valid() and form_details.is_valid()):
             return self.form_invalid(form)
 
         with transaction.atomic():
@@ -89,9 +90,40 @@ class CreateQuestionView(CreateView):
             choice_formset.instance = self.object
             choice_formset.save()
             details.save()
-            return redirect(self.get_success_url())
+            return redirect(self.get_success_url())'''
 
+class UpdateQuestionView(QuestionFormsMixin, UpdateView):
+    model = Question
+    form_class = QuestionModelForm
+    template_name = 'enquetes/create_question.html'
+    success_url = reverse_lazy('enquetes:index')
 
+    '''def get_context_data(self, **kwargs: Any):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["choice_formset"] = ChoiceFormSet(self.request.POST, instance=self.object)
+            context["form_details"] = QuestionDetailsModelForm(self.request.POST, instance=self.object.detail)
+        else:
+            print(self.object.detail)
+            context["choice_formset"] = ChoiceFormSet(instance=self.object)
+            context["form_details"] = QuestionDetailsModelForm(instance=self.object.detail)
+        return context
+
+    def form_valid(self, form):
+        choice_formset = ChoiceFormSet(self.request.POST, instance=self.object)
+        form_details = QuestionDetailsModelForm(self.request.POST, instance=self.object.detail)
+        if not choice_formset.is_valid() or not form_details.is_valid():
+            return self.form_invalid(form)
+        with transaction.atomic():
+            form_details.save()
+            choice_formset.save()
+            form.save()
+            return redirect(self.get_success_url())'''
+
+class DeleteQuestionView(DeleteView):
+    model = Question
+    success_url = reverse_lazy('enquetes:index')
+    template_name = 'enquetes/delete.html'
 
 def signup(request):
     if request.method == "POST":

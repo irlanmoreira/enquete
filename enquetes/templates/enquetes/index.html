@@ -4,7 +4,7 @@
     <h1>Aplicação enquete</h1>
     <ul>
     {% for question in questions %}
-        <li><a href="{% url 'enquetes:detalhe' question.id %}">{{question}}</a></li>
+        <li><a href="{% url 'enquetes:detalhe' question.id %}">{{question}}</a> | <a href="{% url 'enquetes:excluir' question.id %}">excluir</a></li>
     {% empty %}
         <p>Não há enquetes no momento.</p>
     {% endfor %}

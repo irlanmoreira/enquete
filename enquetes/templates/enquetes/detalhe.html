@@ -1,5 +1,5 @@
-<html>
-<body>
+{% extends 'base.html' %}
+{% block main %}
 <h1>{{ question }}</h1>
 <p>Data de publicação: {{ question.pub_date }}</p>
 <p>Status: {{ question.status }}</p>
@@ -15,5 +15,4 @@
     {% endfor %}
 </ul>
 <a href="{% url 'enquetes:index' %}">Página inicial</a>
-</body>
-</html>
+{% endblock %}
